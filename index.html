@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Prevents scrolling if things get crazy */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive Images */
+        .gif-container img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: clamp(1.5rem, 8vw, 2.5rem); /* Responsive font size */
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        /* Button Layout */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        /* Desktop specific layout */
+        @media (min-width: 768px) {
+            .buttons {
+                flex-direction: row; /* Buttons side-by-side on laptop/iPad */
+                flex-wrap: wrap;
+            }
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.2s ease-in-out;
+            min-width: 150px;
+        }
+
+        #yesBtn {
+            background-color: #ff4081;
+            color: white;
+            z-index: 10; /* Keeps it on top of No button */
+        }
+
+        #noBtn {
+            background-color: #ffffff;
+            color: #ff4081;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Celebration Screen */
+        #successMessage h1 {
+            color: #c2185b;
+            animation: bounce 0.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-content" class="container">
+    <div class="gif-container">
+        <img id="displayGif" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZqY3QxeHByNzBqNDR2aGJhcXltYTN3Y294bTlnZ3h2b3dyN2NtcyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XJmdqkq6WjBpetVyyb/giphy.gif" alt="Cute Bears">
+    </div>
+
+    <h1 id="questionText">Hi!!! Ms. Pretty Lady, May I STEAL you for Valentine?</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💕</button>
+        <button id="noBtn">No</button>
+    </div>
+</div>
+
+<div id="successMessage" class="container hidden">
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NmN0NW95bzQxM2lxbTF3NDR5eG5oa3B5aW1td25oeDJ0cHBlYzJ6ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3osxY67ECNutndF5NC/giphy.gif" alt="Happy Dance">
+    </div>
+    <h1>hehe <3 it is an honor to be your valentine 💕😚</h1>
+</div>
+
+<script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const mainContent = document.getElementById('main-content');
+    const successMessage = document.getElementById('successMessage');
+
+    const noTexts = [
+        "Are you sure? :(",
+        "Seryoso na ba?????",
+        "Ms. Prettyyy please!!!",
+        "LAHHH PLEASEE",
+        "sige na po :(",
+        "papaiyakin moko huhu",
+        "yes na po pleaseeeee :(((("
+    ];
+
+    let noCount = 0;
+
+    noBtn.addEventListener('click', () => {
+        // Update "No" text
+        if (noCount < noTexts.length) {
+            noBtn.innerText = noTexts[noCount];
+        } else {
+            noBtn.innerText = "Just say Yes! ❤️";
+        }
+
+        // Make "Yes" button grow significantly
+        let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+        yesBtn.style.fontSize = (currentSize * 1.4) + 'px';
+        yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).paddingTop) * 1.2) + 'px ' +
+                              (parseFloat(window.getComputedStyle(yesBtn).paddingLeft) * 1.2) + 'px';
+
+        noCount++;
+    });
+
+    yesBtn.addEventListener('click', () => {
+        mainContent.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+        document.body.style.backgroundColor = "#fce4ec";
+    });
+</script>
+</body>
+</html>
